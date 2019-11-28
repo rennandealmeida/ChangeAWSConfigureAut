@@ -1,0 +1,41 @@
+#!/bin/bash
+
+environment=$1
+
+aws_config=/aws/config
+aws_credentials=/aws/credentials
+aws_name_environment=/aws/name-environment
+
+account1_aws_config=/aws/00-config_account1
+account1_aws_credentials=/aws/00-credentials_account1
+account1_aws_name_environment=/aws/00-name-environment_account1
+
+account2_aws_config=/aws/01-config_account2
+account2_aws_credentials=/aws/01-credentials_account2
+account2_aws_name_environment=/aws/01-name-environment_account2
+
+if [ "$environment" == "account1" ]; then
+	cat $account1_aws_credentials > $aws_credentials
+	cat $account1_aws_config > $aws_config
+	cat $account1_aws_name_environment > $aws_name_environment
+
+fi
+
+if [ "$environment" == "account2" ]; then
+        cat $account2_aws_credentials > $aws_credentials
+	cat $account2_aws_config > $aws_config
+	cat $account2_aws_name_environment > $aws_name_environment
+fi
+
+if [ "$environment" == "" ]; then
+        echo "----------------"
+        cat $aws_name_environment
+        echo "----------------"
+	echo "AWS_CREDENTIALS"
+        echo "----------------"
+	cat $aws_credentials
+	echo "----------------"
+	echo "AWS_CONFIG"
+	echo "----------------"
+        cat $aws_config
+fi
